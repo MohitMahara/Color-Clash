@@ -1,11 +1,27 @@
-import { AmountCard } from "../Components/Card/AmountCard";
-import { ColorCard } from "../Components/Card/ColorCard";
+import { useState } from "react";
 import { RegisteredUsers } from "../Components/HomePage/RegisteredUsers";
 import { RoundTracker } from "../Components/HomePage/RoundTracker";
 import { Timer } from "../Components/HomePage/Timer";
 import Layout from "../Components/Layout/Layout";
+import { useRound } from "../Components/HomePage/RoundContext";
 
 export default function HomePage() {
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState(0);
+  const [registeredUsers, setRegisteredUsers] = useState(0);
+  const {round} = useRound();
+
+
+  const handleSubmit = () => {
+    if(selectedAmount === 0 || selectedColor === ""){
+        alert("To start the game please select color and amount");
+        return;
+    }
+
+    
+  }
+
+
   return (
     <Layout>
       <div className="bg-gray-800 w-full p-6 min-h-screen">
@@ -16,22 +32,48 @@ export default function HomePage() {
         </div>
        
        <div className="flex items-center justify-between mt-10 md:w-3xl mx-auto max-w-full  h-[200px] md:h-[300px]">
-           <ColorCard color={"Red"} />
-           <ColorCard color={"Blue"} />
-           <ColorCard color={"Green"} />
+           <div className={`flex justify-center items-center bg-red-500 h-full w-[30%] rounded-lg text-gray-100 hover:border-3 hover:border-gray-100 ${selectedColor == "red" ? "border-3 border-gray-100" : ""} cursor-pointer transition duration-300`} onClick={() => setSelectedColor("red")}>
+                <h1 className="text-lg font-semibold">Red</h1>
+           </div>
+
+           <div className={`flex justify-center items-center bg-blue-500 h-full w-[30%] rounded-lg text-gray-100 hover:border-3 hover:border-gray-100 ${selectedColor == "blue" ? "border-3 border-gray-100" : ""} cursor-pointer transition duration-300`} onClick={() => setSelectedColor("blue")}>
+               <h1 className="text-lg font-semibold">Blue</h1>
+           </div>
+
+          <div className={`flex justify-center items-center bg-green-500 h-full w-[30%] rounded-lg text-gray-100 hover:border-3 hover:border-gray-100 ${selectedColor == "green" ? "border-3 border-gray-100" : ""} cursor-pointer transition duration-300`} onClick={() => setSelectedColor("green")}>
+               <h1 className="text-lg font-semibold">Green</h1>
+          </div>
        </div>
 
        <div className="flex items-center justify-center gap-4 mt-10 bg-gray-700 md:w-2xl mx-auto max-w-full rounded-lg px-2">
-            <AmountCard amount={0.1} />
-            <AmountCard amount={0.2} />
-            <AmountCard amount={0.5} />
-            <AmountCard amount={1} />
-            <AmountCard amount={2} />
-            <AmountCard amount={5} />
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 0.1 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(0.1)}>
+                <h2 className="text-lg font-bold">0.1</h2>
+            </div>
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 0.2 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(0.2)}>
+                <h2 className="text-lg font-bold">0.2</h2>
+            </div>
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 0.5 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(0.5)}>
+                <h2 className="text-lg font-bold">0.5</h2>
+            </div>
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 1 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(1)}>
+                <h2 className="text-lg font-bold">1</h2>
+            </div>
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 2 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(2)}>
+                <h2 className="text-lg font-bold">2</h2>
+            </div>
+
+            <div className={`flex bg-gray-50 my-2 text-gray-900 p-2 justify-center items-center rounded-lg shadow-md cursor-pointer w-[40px] h-[40px] hover:border-3 hover:border-green-600 ${selectedAmount == 5 ? "border-3 border-green-600" : ""} transition duration-200`} onClick={() => setSelectedAmount(5)}>
+                <h2 className="text-lg font-bold">5</h2>
+            </div>
        </div>
 
        <div className="flex items-center justify-center mt-10">
-         <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+         <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200" onClick={handleSubmit}>
            Start Game
          </button>
         </div> 
