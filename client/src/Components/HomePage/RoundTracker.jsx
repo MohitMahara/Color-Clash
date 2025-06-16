@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import { useRound } from "./RoundContext";
 
-export const RoundTracker = ({currentRound}) => {
-    const [round, setRound] = useState("1");
+export const RoundTracker = () => {
+    const {round } = useRound();
     return(
         <>
            <div className="flex flex-col items-center justify-center">
