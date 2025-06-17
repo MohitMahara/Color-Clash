@@ -116,8 +116,7 @@ export const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to="/create-event"
+                    <Link to="/rules"
                       className="block text-gray-700 hover:text-blue-600"
                     >
                       Rules
@@ -125,11 +124,26 @@ export const Header = () => {
                   </li>
                   <li>
                     <Link
-                      to="/browse-events"
+                      to="/history"
                       className="block text-gray-700 hover:text-blue-600"
                     >
                       History
                     </Link>
+                  </li>
+
+                 <li className="flex justify-center">
+                   {userInfo?.user ? (
+                     <div className="relative flex items-center w-[40px] h-[40px] justify-center rounded-full bg-gray-200 p-2">
+                         <p className="text-lg text-gray-800 cursor-pointer" onClick={handleIsOpen}>{userInfo?.user?.name.charAt(0)} </p>
+                         <div className={` ${isOpen ?  "block" : "hidden"} absolute left-0  top-12 bg-black text-white rounded-lg p-3 cursor-pointer`}>
+                            <button className="text-md" onClick={handleLogOut}>LogOut</button>
+                         </div>
+                      </div>
+                       ) : (
+                        <Link to="/register" className="text-gray-700 hover:text-blue-600">
+                          SignUp
+                        </Link>
+                    )}
                   </li>
                 </ul>
               </div>

@@ -15,6 +15,7 @@ export default function HomePage() {
   const {userInfo} = UseAuth();
 
 
+
   const handleSubmit = async () => {
     try {
 
@@ -48,7 +49,7 @@ export default function HomePage() {
   return (
     <Layout>
       <div className="bg-gray-800 w-full p-6 min-h-screen">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full items-center gap-2">
           <Timer/>
           <RoundTracker/>
           <RegisteredUsers/>

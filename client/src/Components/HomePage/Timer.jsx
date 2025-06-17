@@ -15,7 +15,7 @@ export const Timer = () => {
     return(
        <>
           <div className="flex flex-row items-center justify-center p-2 bg-black rounded-lg">
-              <p className="text-red-500 text-2xl font-semibold">{formatTime(timeLeft)}</p>
+              <p className="text-red-500 text-md md:text-2xl font-semibold">{formatTime(timeLeft)}</p>
           </div>
        </>
     );
