@@ -17,6 +17,7 @@ export default function HomePage() {
         alert("To start the game please select color and amount");
         return;
     }
+    alert("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
 
     
   }
