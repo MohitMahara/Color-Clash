@@ -6,29 +6,44 @@ import Layout from "../Components/Layout/Layout";
 import { useRound } from "../contexts/roundContext";
 import { UseAuth } from "../contexts/authContext";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function HomePage() {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedAmount, setSelectedAmount] = useState(0);
-  const [registeredUsers, setRegisteredUsers] = useState(0);
   const {round} = useRound();
   const {userInfo} = UseAuth();
 
 
-  const handleSubmit = () => {
-     
+  const handleSubmit = async () => {
+    try {
+
     if(userInfo?.user == null || userInfo?.token == null) {
       toast.error("Please login to start the game");
       return;
-    }
+     }
 
     if(selectedAmount === 0 || selectedColor === ""){
         toast.error("To start the game please select a color and amount");
         return;
     }
-    toast.success("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
-  }
+     
+    const userId = userInfo?.user?._id;
 
+    const res = await axios.post(`${import.meta.env.VITE_SERVER_API}/api/v1/game/bet`,{
+       selectedAmount, selectedColor, round, userId
+    });
+
+    if(res.data.success){
+      toast.success("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
+    }
+
+
+    } catch (error) {
+      toast.error(error.message);
+    }
+
+  }
 
   return (
     <Layout>

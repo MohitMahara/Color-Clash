@@ -30,8 +30,6 @@ export const registerController = async(req, res, next) =>{
             name, 
             email,
             password : hashedPassword,
-            totalBalance : 50, // Initial balance,
-            gamePlayed : []
         }).save();
 
         return res.status(200).send({
@@ -44,7 +42,6 @@ export const registerController = async(req, res, next) =>{
        next(error);
     }
 }
-
 
 
 

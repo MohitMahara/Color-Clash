@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState, createContext, useContext, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const GAME_START_TIME = new Date("2025-06-17T07:34:00z");
 const ROUND_DURATION = 120; 
@@ -22,8 +24,22 @@ export const RoundProvider = ({ children }) => {
         setTimeLeft(timeRemaining);
     }
 
+    const getWinningColor = async() => {
+        try {
+         const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/winner/${round}`);
+         console.log(res.data.winningColor);  
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
     useEffect(() => {
+
        calculateTimeLeft(); 
+
+       if(timeLeft === 0){
+         getWinningColor();
+       }
        const interval = setInterval(calculateTimeLeft, 1000);
        return () => clearInterval(interval); 
     }, []);

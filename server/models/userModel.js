@@ -20,12 +20,13 @@ const userSchema = new mongoose.Schema(
 
     totalBalance : {
         type : Number,
+        default : 50,
     },
 
     gamePlayed : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "games",
+            ref : "bets",
         },
     ]
 

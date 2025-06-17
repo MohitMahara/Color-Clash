@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const betSchema = new mongoose.Schema(
   {
     round : {
-      Number,
-      required,
+      type : Number,
+      required : true,
     },
 
     userId : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "users",
-        required
+        required : true,
     },
 
     stake: {

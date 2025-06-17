@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const gameSchema = new mongoose.Schema(
   {
     round : {
-      Number,
-      required,
+     type : Number,
+      required : true,
     },
 
     totalStake: {
@@ -14,7 +14,6 @@ const gameSchema = new mongoose.Schema(
 
     winningColor: {
       type: String,
-      required: true,
     },
 
     totalBets : [
