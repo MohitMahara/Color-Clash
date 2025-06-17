@@ -1,6 +1,6 @@
 import { useState, createContext, useContext, useEffect } from "react";
 
-const GAME_START_TIME = new Date("2025-06-17T04:03:00z");
+const GAME_START_TIME = new Date("2025-06-17T07:34:00z");
 const ROUND_DURATION = 120; 
 
 const RoundContext = createContext();

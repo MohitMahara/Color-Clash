@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./configs/db.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import gameRoutes from "./routes/gameRoutes.js";
+import authRoutes from "./routes/authRoutes.js";    
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
     res.send("Hello, World!");
 })
 
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/game", gameRoutes);
 
 
