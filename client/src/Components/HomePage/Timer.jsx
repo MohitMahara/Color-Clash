@@ -1,25 +1,7 @@
-import React, {useState, useEffect} from "react";
 import { useRound } from "./RoundContext";
 
 export const Timer = () => {
-    const [timeLeft, setTimeLeft] = useState(120);
-    const {round, setRound} = useRound();
-
-    useEffect(() =>{
-      if(timeLeft === 0){
-         setTimeLeft(120);
-         setRound(prevRound => prevRound + 1);
-         return;
-      }
-
-      const timer = setInterval(() => {
-        setTimeLeft(prevTime => prevTime -1);
-      }, 1000);
-
-      return () => clearInterval(timer);
-
-    }, [timeLeft])
-
+    const {timeLeft} = useRound();
 
     const formatTime = (time) =>{
         const minutes = Math.floor(time / 60);
