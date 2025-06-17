@@ -3,23 +3,30 @@ import { RegisteredUsers } from "../Components/HomePage/RegisteredUsers";
 import { RoundTracker } from "../Components/HomePage/RoundTracker";
 import { Timer } from "../Components/HomePage/Timer";
 import Layout from "../Components/Layout/Layout";
-import { useRound } from "../Components/HomePage/RoundContext";
+import { useRound } from "../contexts/roundContext";
+import { UseAuth } from "../contexts/authContext";
+import toast from "react-hot-toast";
 
 export default function HomePage() {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedAmount, setSelectedAmount] = useState(0);
   const [registeredUsers, setRegisteredUsers] = useState(0);
   const {round} = useRound();
+  const {userInfo} = UseAuth();
 
 
   const handleSubmit = () => {
+     
+    if(userInfo?.user == null || userInfo?.token == null) {
+      toast.error("Please login to start the game");
+      return;
+    }
+
     if(selectedAmount === 0 || selectedColor === ""){
-        alert("To start the game please select color and amount");
+        toast.error("To start the game please select a color and amount");
         return;
     }
-    alert("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
-
-    
+    toast.success("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
   }
 
 

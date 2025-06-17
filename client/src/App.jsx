@@ -1,14 +1,22 @@
-import React from 'react';
-import './styles/App.css'
-import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import "./styles/App.css";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import { Toaster } from "react-hot-toast";
+import { LoginPage } from "./pages/auth/LoginPage";
+import { RegisterPage } from "./pages/auth/RegisterPage";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage/>} />
-    </Routes>
-  )
+    <>
+      <Toaster position="top-center" toastOptions={{ default: { duration: 1500 } }} />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;

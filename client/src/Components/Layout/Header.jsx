@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { UseAuth } from "../../contexts/authContext";
 
 export const Header = () => {
   const [visible, setVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const {userInfo, setUserInfo} = UseAuth();
+  const navigate = useNavigate();
 
 //   handle mobile menu toggle
   const handleClick = () => {
@@ -11,6 +15,24 @@ export const Header = () => {
       setVisible(false);
     } else setVisible(true);
   };
+
+
+  // handles the user profile dropdown
+  
+  const handleIsOpen = () => {
+     if(isOpen) setIsOpen(false);
+     else setIsOpen(true);
+  }
+
+  const handleLogOut = () => {
+    setUserInfo({
+      user: null,
+      token: null,
+    });
+
+    localStorage.removeItem("colorclash");
+    navigate("/login");
+  }
 
   return (
     <>
@@ -21,7 +43,7 @@ export const Header = () => {
               <p className="ps-2">Color Clash</p>
             </Link>
 
-            <ul className="hidden md:flex space-x-6">
+            <ul className="hidden md:flex space-x-6 justify-center items-center">
               <li>
                 <Link to="/" className="text-gray-700 hover:text-blue-600">
                   Home
@@ -40,6 +62,23 @@ export const Header = () => {
                 >
                   History
                 </Link>
+              </li>
+
+               <li>
+                {userInfo?.user ? (
+                  <div className="relative flex items-center w-[40px] h-[40px] justify-center rounded-full bg-gray-200 p-2">
+                     <p className="text-lg text-gray-800 cursor-pointer" onClick={handleIsOpen}>{userInfo?.user?.name.charAt(0)} </p>
+                     <div className={` ${isOpen ?  "block" : "hidden"} absolute left-0  top-12 bg-black text-white rounded-lg p-3 cursor-pointer`}>
+                       <button className="text-md" onClick={handleLogOut}>LogOut</button>
+                     </div>
+                  </div>
+                ) : (
+                <Link to="/register" className="text-gray-700 hover:text-blue-600">
+                  SignUp
+                </Link>
+
+                )}
+
               </li>
             </ul>
 

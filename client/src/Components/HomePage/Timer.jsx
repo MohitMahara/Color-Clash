@@ -1,4 +1,4 @@
-import { useRound } from "./RoundContext";
+import { useRound } from "../../contexts/roundContext";
 
 export const Timer = () => {
     const {timeLeft} = useRound();
