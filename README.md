@@ -1,4 +1,4 @@
-### 🎮 Color Clash
+# 🎮 Color Clash
 
 Color Clash is a real-time, color-based betting game where players bet on Red, Blue, or Green in 2-minute rounds. The winning color is randomly selected each round, and players earn 2x of their stake coins.
 
@@ -30,7 +30,7 @@ git clone https://github.com/MohitMahara/Color-Clash.git
 cd Color-Clash
 ```
 
-### 3️⃣ Frontend Setup
+# 3️⃣ Frontend Setup
 ```sh
 cd client
 npm install  # Install dependencies
