@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RegisteredUsers } from "../Components/HomePage/RegisteredUsers";
+import { FaRegUser } from "react-icons/fa";
 import { RoundTracker } from "../Components/HomePage/RoundTracker";
 import { Timer } from "../Components/HomePage/Timer";
 import Layout from "../Components/Layout/Layout";
@@ -13,8 +13,19 @@ export default function HomePage() {
   const [selectedAmount, setSelectedAmount] = useState(0);
   const {round} = useRound();
   const {userInfo} = UseAuth();
+  const [bets, setBets] = useState(0);
 
 
+  const getTotalBets = async() => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/getBets/${round}`);
+      if(res.data.success){
+         setBets(res.data.bets.length);
+      }
+      } catch (error) {
+      toast.error(error.message);
+    }
+  }
 
   const handleSubmit = async () => {
     try {
@@ -36,6 +47,7 @@ export default function HomePage() {
     });
 
     if(res.data.success){
+      getTotalBets();
       toast.success("You have been registered in round " + round + " with color " + selectedColor + " and amount " + selectedAmount);
     }
 
@@ -52,7 +64,10 @@ export default function HomePage() {
         <div className="flex justify-between w-full items-center gap-2">
           <Timer/>
           <RoundTracker/>
-          <RegisteredUsers/>
+          <div className="flex items-center justify-center gap-2">
+            <FaRegUser className="text-green-500"/>
+            <p className="text-sm md:text-xl text-green-500 font-seminbold">{bets}</p>
+          </div>
         </div>
        
        <div className="flex items-center justify-between mt-10 md:w-3xl mx-auto max-w-full  h-[200px] md:h-[300px]">

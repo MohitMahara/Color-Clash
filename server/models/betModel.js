@@ -24,7 +24,8 @@ const betSchema = new mongoose.Schema(
     },
 
     isWinner : {
-        type : Boolean
+        type : Boolean,
+        default : null
     }
 
   },{ timestamps: true });

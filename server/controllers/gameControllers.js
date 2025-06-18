@@ -36,7 +36,6 @@ export const startGameController = async (req, res, next) => {
       userId: user._id,
       stake: selectedAmount,
       color: selectedColor,
-      isWinner: false, 
     }).save();
 
 
@@ -103,6 +102,19 @@ export const getWinningColorController = async(req, res, next) => {
             const colors = ["red", "blue", "green"];
             const randomIndex = Math.floor(Math.random() * colors.length);
             winningColor = colors[randomIndex];
+            const allBets = await betModel.find({round : round}).populate("userId");
+
+            allBets.forEach(async(bet) => {
+             if(bet.color == winningColor){
+                bet.isWinner = true;
+                bet.userId.totalBalance += bet.stake * 2;
+                await bet.userId.save();
+             }
+             else bet.isWinner = false;
+
+             await bet.save();
+            })
+
             game.winningColor = winningColor;
             await game.save();
         }
@@ -122,7 +134,7 @@ export const getWinningColorController = async(req, res, next) => {
 
 export const getHistoryController = async (req, res, next) => {
     try {
-        const gameHistory = await gameModel.find().populate("totalBets").sort({ round: -1 });
+        const gameHistory = await gameModel.find().populate("totalBets");
 
         if (!gameHistory || gameHistory.length === 0) {
             return res.status(404).send({
@@ -180,4 +192,28 @@ export const getUserHistoryController = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+}
+
+export const getRegisteredUsers = async(req, res, next) =>{
+  try {
+    const {round} = req.params;
+
+    const bets = await gameModel.find({round : round}).populate("totalBets");
+
+    if(!bets){
+        res.status(400).send({
+            success : false,
+            msg : "No game found for this round"
+        })
+    }
+
+    res.status(200).send({
+        success : true,
+        msg : "Total bets",
+        bets,
+    })
+     
+  } catch (error) {
+    next(error);
+  }
 }

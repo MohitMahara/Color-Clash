@@ -16,7 +16,8 @@ export const HistoryPage = () => {
          const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/history`);
 
          if(res.data.success){
-            setGameHistory(res.data.gameHistory);
+            const his = res.data.gameHistory.sort((a, b) => b.round - a.round);
+            setGameHistory(his);
          }
             
         } catch (error) {
@@ -33,7 +34,8 @@ export const HistoryPage = () => {
          const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/history/${userId}`);
 
          if(res.data.success){
-            setMyHistory(res.data.myHistory);
+            const his = res.data.myHistory.sort((a, b) => b.round - a.round);
+            setMyHistory(his);
          }
             
         } catch (error) {
@@ -86,7 +88,7 @@ export const HistoryPage = () => {
                                             <p className="text-gray-400">{new Date(game.createdAt).toLocaleString()}</p>
                                         </div>
                                         <div className="flex flex-col w-[10%] justify-center text-center items-center">
-                                            <p className={`${game.isWinner ? "text-green-500": "text-red-500"}`}>{game.isWinner ? "Won" : "Loss" }</p>
+                                            <p className={`${game.isWinner ? "text-green-500": "text-red-500"}`}>{game.isWinner == null  ? "Wait for result..." : game.isWinner ? "Won" : "Loss" }</p>
                                             <p className="text-gray-400">Bet : {game.stake}</p>
                                         </div>   
                                     </li>
