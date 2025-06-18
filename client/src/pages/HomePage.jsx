@@ -11,16 +11,15 @@ import axios from "axios";
 export default function HomePage() {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedAmount, setSelectedAmount] = useState(0);
-  const {round} = useRound();
+  const {round, betCount, setBetCount} = useRound();
   const {userInfo} = UseAuth();
-  const [bets, setBets] = useState(0);
 
 
   const getTotalBets = async() => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/getBets/${round}`);
       if(res.data.success){
-         setBets(res.data.bets.length);
+         setBetCount(res.data.bets.length);
       }
       } catch (error) {
       toast.error(error.message);
@@ -66,7 +65,7 @@ export default function HomePage() {
           <RoundTracker/>
           <div className="flex items-center justify-center gap-2">
             <FaRegUser className="text-green-500"/>
-            <p className="text-sm md:text-xl text-green-500 font-seminbold">{bets}</p>
+            <p className="text-sm md:text-xl text-green-500 font-seminbold">{betCount}</p>
           </div>
         </div>
        

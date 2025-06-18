@@ -104,16 +104,37 @@ export const getWinningColorController = async(req, res, next) => {
             winningColor = colors[randomIndex];
             const allBets = await betModel.find({round : round}).populate("userId");
 
-            allBets.forEach(async(bet) => {
-             if(bet.color == winningColor){
-                bet.isWinner = true;
-                bet.userId.totalBalance = Number((bet.userId.totalBalance + (bet.stake *2) ).toFixed(2));
-                await bet.userId.save();
-             }
-             else bet.isWinner = false;
+            // Update user balance and bet status 
+            const userMap = new Map();
 
-             await bet.save();
-            })
+            for(const bet of allBets){
+                const user = bet.userId;
+
+                if(bet.color === winningColor){
+                    bet.isWinner = true;
+                    const payout = bet.stake * 2;
+                    const userId = user._id.toString();
+
+                    if(userMap.has(userId)){
+                        const existing = userMap.get(userId);
+                        existing.balance = Number((existing.balance + payout).toFixed(2));
+                    }else{
+                      userMap.set(userId, {
+                          doc: user,
+                          balance: Number((user.totalBalance + payout).toFixed(2)),
+                       });
+                    }
+                }else{
+                    bet.isWinner = false;
+                }
+               
+                bet.save();
+            }
+
+            for (const { doc, balance } of userMap.values()) {
+                doc.totalBalance = balance;
+                await doc.save();
+            }
 
             game.winningColor = winningColor;
             await game.save();

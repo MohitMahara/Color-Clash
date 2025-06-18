@@ -40,7 +40,7 @@ const RulesPage = () => {
             <li>
               <strong>Wait for Result:</strong> When the round ends, a winning
               color is randomly selected — visible to all players at the same
-              time.
+              time. You can also check it on your history page after round ends.
             </li>
             <li>
               <strong>Check Outcome:</strong> If your chosen color matches the

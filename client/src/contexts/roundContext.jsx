@@ -12,6 +12,7 @@ export const RoundProvider = ({ children }) => {
     const prevRound = useRef(null);
 
     const [round, setRound] = useState(1);
+    const [betCount, setBetCount] = useState(0);
     const [timeLeft, setTimeLeft] = useState(ROUND_DURATION);
 
     const calculateTimeLeft = () =>{
@@ -24,6 +25,7 @@ export const RoundProvider = ({ children }) => {
         const timeRemaining = ROUND_DURATION - timeInCurrentRound;
 
         if (prevRound.current && currentRound !== prevRound.current){
+            setBetCount(0);
             getWinningColor(currentRound -1);
         }
 
@@ -44,7 +46,7 @@ export const RoundProvider = ({ children }) => {
     }, []);
 
 
-    return <RoundContext.Provider value={{round, timeLeft}} >{children}</RoundContext.Provider>
+    return <RoundContext.Provider value={{round, timeLeft, betCount, setBetCount}} >{children}</RoundContext.Provider>
 }
 
 export const useRound = () => useContext(RoundContext);
