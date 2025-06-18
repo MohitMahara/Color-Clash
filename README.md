@@ -24,20 +24,20 @@ Color Clash is a real-time, color-based betting game where players bet on Red, B
 
 ## 🚀 Installation & Setup
 
-# 1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository
 ```sh
 git clone https://github.com/MohitMahara/Color-Clash.git
 cd Color-Clash
 ```
 
-# 3️⃣ Frontend Setup
+### 3️⃣ Frontend Setup
 ```sh
 cd client
 npm install  # Install dependencies
 npm start    # Run the frontend server
 ```
 
-# 2️⃣ Backend Setup
+### 2️⃣ Backend Setup
 ```sh
 cd server
 npm install  # Install dependencies
