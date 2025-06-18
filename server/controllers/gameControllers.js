@@ -220,7 +220,7 @@ export const getRegisteredUsers = async(req, res, next) =>{
   try {
     const {round} = req.params;
 
-    const bets = await gameModel.find({round : round}).populate("totalBets");
+    const bets = await gameModel.findOne({round : round}).populate("totalBets");
 
     if(!bets){
         res.status(400).send({

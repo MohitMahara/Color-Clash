@@ -19,7 +19,7 @@ export default function HomePage() {
     try {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/getBets/${round}`);
       if(res.data.success){
-         setBetCount(res.data.bets.length);
+         setBetCount(res.data.bets.totalBets.length);
       }
       } catch (error) {
       toast.error(error.message);
