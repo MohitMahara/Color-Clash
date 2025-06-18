@@ -1,6 +1,7 @@
 import userModel from "../models/userModel.js";
 import betModel from "../models/betModel.js";
 import gameModel from "../models/gameModel.js";
+import mongoose from "mongoose";
 
 export const startGameController = async (req, res, next) => {
    try {
@@ -114,5 +115,69 @@ export const getWinningColorController = async(req, res, next) => {
     
     } catch (error) {
          next(error);
+    }
+}
+
+
+
+export const getHistoryController = async (req, res, next) => {
+    try {
+        const gameHistory = await gameModel.find().populate("totalBets").sort({ round: -1 });
+
+        if (!gameHistory || gameHistory.length === 0) {
+            return res.status(404).send({
+                success: false,
+                msg: "No game history found",
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            msg: "Game history fetched successfully",
+            gameHistory,
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
+export const getUserHistoryController = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+
+        if (!userId) {
+            return res.status(400).send({
+                success: false,
+                msg: "User ID is required",
+            });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).send({
+              success: false,
+              msg: "Invalid User ID",
+            })   
+        }    
+
+        const user = await userModel.findById(userId).populate("gamePlayed");
+
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                msg: "User not found",
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            msg: "User history fetched successfully",
+            myHistory: user.gamePlayed,
+        });
+
+    } catch (error) {
+        next(error);
     }
 }
