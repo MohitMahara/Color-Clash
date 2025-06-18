@@ -14,7 +14,6 @@ export default function HomePage() {
   const {round, betCount, setBetCount} = useRound();
   const {userInfo} = UseAuth();
 
-
   const getTotalBets = async() => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_API}/api/v1/game/getBets/${round}`);

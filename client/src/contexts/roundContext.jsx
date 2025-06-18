@@ -3,7 +3,7 @@ import { useState, createContext, useContext, useEffect } from "react";
 import { useRef } from 'react';
 import toast from "react-hot-toast";
 
-const GAME_START_TIME = new Date("2025-06-17T07:34:00z");
+const GAME_START_TIME = new Date("2025-06-18T17:18:00z");
 const ROUND_DURATION = 120; 
 
 const RoundContext = createContext();
