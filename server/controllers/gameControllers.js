@@ -59,7 +59,7 @@ export const startGameController = async (req, res, next) => {
 
 
     user.gamePlayed.push(newBet._id);
-    user.totalBalance -= selectedAmount;
+    user.totalBalance = Number((user.totalBalance - selectedAmount).toFixed(2));
     await user.save();
 
      return res.status(200).send({
@@ -107,7 +107,7 @@ export const getWinningColorController = async(req, res, next) => {
             allBets.forEach(async(bet) => {
              if(bet.color == winningColor){
                 bet.isWinner = true;
-                bet.userId.totalBalance += bet.stake * 2;
+                bet.userId.totalBalance = Number((bet.userId.totalBalance + (bet.stake *2) ).toFixed(2));
                 await bet.userId.save();
              }
              else bet.isWinner = false;
@@ -187,6 +187,7 @@ export const getUserHistoryController = async (req, res, next) => {
             success: true,
             msg: "User history fetched successfully",
             myHistory: user.gamePlayed,
+            balance : user.totalBalance,
         });
 
     } catch (error) {

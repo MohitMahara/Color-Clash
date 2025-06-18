@@ -3,11 +3,13 @@ import Layout from "../Components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { UseAuth } from "../contexts/authContext";
+import { BsCoin } from "react-icons/bs";
 
 export const HistoryPage = () => {
     const [gameHistory, setGameHistory] = useState([]);
     const [myHistory, setMyHistory] = useState([]);
     const [selectedTab, setSelectedTab] = useState("gameHistory");
+    const [totalBalance, setTotalBalance] = useState(0);
     const {userInfo} = UseAuth();
     const userId = userInfo?.user?._id;
 
@@ -36,6 +38,7 @@ export const HistoryPage = () => {
          if(res.data.success){
             const his = res.data.myHistory.sort((a, b) => b.round - a.round);
             setMyHistory(his);
+            setTotalBalance(res.data.balance);
          }
             
         } catch (error) {
@@ -55,7 +58,13 @@ export const HistoryPage = () => {
   return (
     <Layout>
       <div className="bg-gray-800 w-full p-6 min-h-screen mx-auto">
-        <h1 className="text-2xl md:text-3xl text-gray-100 font-semibold text-center">History</h1>
+        <div className="flex flex-row justify-between items-center">
+           <h1 className="text-2xl md:text-3xl text-gray-100 font-semibold">History</h1>
+           <div className="flex gap-2 justify-center items-center">
+               <BsCoin className="text-yellow-400"/>  
+               <p className="text-white"> {totalBalance}</p>
+           </div>
+        </div>
         <div className="w-full flex flex-col md:flex-row mt-6 h-[80vh] gap-4">
             <div className="flex flex-row gap-4 w-full h-[100px]  md:flex-col md:w-[15%] md:h-full bg-gray-700 p-4 shdaow-lg rounded-lg">
                <button className={` py-2 px-4 rounded-lg w-1/2 md:w-full transition duration-300 ${selectedTab == "gameHistory" ? "bg-blue-600 text-white " : "bg-gray-100 text-black"} `} onClick={() => setSelectedTab("gameHistory")}>Game History</button>
